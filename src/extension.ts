@@ -80,15 +80,15 @@ async function handleWhoKnowsAbout(): Promise<void> {
       .filter((x) => x) as string[];
 
     // display candidate list
-    if (topAuthors.length > 0) {
+    if (topAuthors.length === 0) {
+      window.showInformationMessage(`Nobody knows about "${query}"`);
+    } else {
       const quickPick = window.createQuickPick();
       quickPick.items = topAuthors.map((author) => ({ label: author }));
       quickPick.onDidChangeSelection((items) => {
         const [item] = items;
         if (item) {
-          window.showInformationMessage(
-            `Who knows about "${query}"? ${item.label}`
-          );
+          window.showInformationMessage(`${item.label} knows about "${query}"`);
           quickPick.dispose();
         }
       });
